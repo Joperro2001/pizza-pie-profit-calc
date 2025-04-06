@@ -80,11 +80,16 @@ const Index = () => {
     // Calculate cost per pizza
     const costPerPizza = totalCostFor6Pizzas / 6;
     
-    // Calculate profit amount based on margin
-    const profitPerPizza = (costPerPizza * profitMargin) / (100 - profitMargin);
+    // Calculate selling price based on profit margin
+    // For ALL profit margin values:
+    // If margin is 20%, then selling price = cost / (1 - 0.2) = cost / 0.8
+    // If margin is 50%, then selling price = cost / (1 - 0.5) = cost / 0.5
+    // If margin is 150%, then selling price = cost / (1 - 0.6) = cost * 2.5
+    const marginDecimal = profitMargin / 100;
+    const sellingPrice = costPerPizza * (1 + marginDecimal);
     
-    // Calculate selling price
-    const sellingPrice = costPerPizza + profitPerPizza;
+    // Calculate profit amount
+    const profitPerPizza = sellingPrice - costPerPizza;
     
     // Update calculation state
     setCalculation({
