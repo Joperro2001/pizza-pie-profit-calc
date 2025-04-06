@@ -39,7 +39,7 @@ export function PizzaPriceResult({ calculation }: PizzaPriceResultProps) {
               {calculation.electricityCost > 0 && (
                 <p className="text-xs text-yellow-600 flex items-center gap-1">
                   <Lightbulb className="h-3 w-3" />
-                  {t('forSixPizzas')}: €{formatCurrency(calculation.electricityCost * 6)}
+                  {t('forSixPizzas')} €{formatCurrency(calculation.electricityCost * 6)}
                 </p>
               )}
             </div>
