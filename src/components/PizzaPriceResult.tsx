@@ -2,7 +2,7 @@
 import React from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { PizzaCostCalculation } from "@/types/pizza";
-import { CircleDollarSign, CirclePercent, Percent, Pizza } from "lucide-react";
+import { CircleDollarSign, CirclePercent, Percent, Pizza, Lightbulb } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 
 interface PizzaPriceResultProps {
@@ -40,6 +40,17 @@ export function PizzaPriceResult({ calculation }: PizzaPriceResultProps) {
                 €{formatCurrency(calculation.costPerPizza)}
               </p>
             </div>
+            
+            {calculation.electricityCost > 0 && (
+              <div className="space-y-1 bg-white/60 p-3 rounded-md">
+                <p className="text-xs text-gray-500 uppercase font-medium">{t('electricityCostLabel')}</p>
+                <p className="text-lg font-semibold flex items-center gap-1 text-yellow-600">
+                  <Lightbulb className="h-4 w-4" />
+                  €{formatCurrency(calculation.electricityCost)}
+                </p>
+              </div>
+            )}
+            
             <div className="space-y-1 bg-white/60 p-3 rounded-md">
               <p className="text-xs text-gray-500 uppercase font-medium">{t('profitPerPizza')}</p>
               <p className="text-lg font-semibold flex items-center gap-1 text-green-700">
@@ -62,6 +73,12 @@ export function PizzaPriceResult({ calculation }: PizzaPriceResultProps) {
                 <p className="text-3xl font-bold text-red-600 relative z-10">€{formatCurrency(calculation.sellingPrice)}</p>
                 <div className="absolute inset-0 bg-yellow-300/20 blur-sm rounded-full"></div>
               </div>
+              
+              {calculation.electricityCost > 0 && (
+                <div className="mt-2 text-sm text-gray-600">
+                  <p>{t('totalCostWithElectricity')}: €{formatCurrency(calculation.totalCostWithElectricity)}</p>
+                </div>
+              )}
             </div>
           </div>
         </div>

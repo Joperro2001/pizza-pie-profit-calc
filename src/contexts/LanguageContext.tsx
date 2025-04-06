@@ -106,6 +106,64 @@ const translations: Translations = {
     it: 'Margini più alti: Maggior profitto per pizza'
   },
   
+  // Electricity cost section
+  electricityCost: {
+    en: 'Electricity Cost for Baking',
+    it: 'Costo Elettricità per la Cottura'
+  },
+  selectCountry: {
+    en: 'Select Your Country',
+    it: 'Seleziona il Tuo Paese'
+  },
+  germany: {
+    en: 'Germany',
+    it: 'Germania'
+  },
+  france: {
+    en: 'France',
+    it: 'Francia'
+  },
+  unitedkingdom: {
+    en: 'United Kingdom',
+    it: 'Regno Unito'
+  },
+  spain: {
+    en: 'Spain',
+    it: 'Spagna'
+  },
+  italy: {
+    en: 'Italy',
+    it: 'Italia'
+  },
+  electricityPrice: {
+    en: 'Electricity Price',
+    it: 'Prezzo Elettricità'
+  },
+  costPerPizza: {
+    en: 'Cost Per Pizza',
+    it: 'Costo Per Pizza'
+  },
+  preheatCost: {
+    en: 'Preheat Cost',
+    it: 'Costo Preriscaldamento'
+  },
+  totalFirstPizza: {
+    en: 'Total for First Pizza',
+    it: 'Totale Prima Pizza'
+  },
+  electricityNote: {
+    en: 'Costs calculated for a standard electric oven (2.5kW) with 20min preheat time.',
+    it: 'Costi calcolati per un forno elettrico standard (2.5kW) con 20 minuti di preriscaldamento.'
+  },
+  electricityCostLabel: {
+    en: 'Electricity Cost',
+    it: 'Costo Elettricità'
+  },
+  totalCostWithElectricity: {
+    en: 'Total Cost with Electricity',
+    it: 'Costo Totale con Elettricità'
+  },
+  
   // Price calculation
   pizzaPriceCalculation: {
     en: 'Pizza Price Calculation',
@@ -152,6 +210,10 @@ const translations: Translations = {
   step5: {
     en: 'See your recommended selling price!',
     it: 'Vedi il tuo prezzo di vendita consigliato!'
+  },
+  electricityStep: {
+    en: 'Select your country to include electricity costs',
+    it: 'Seleziona il tuo paese per includere i costi elettrici'
   },
   quote: {
     en: 'The secret to success is not the sauce, it\'s the profit margin!',

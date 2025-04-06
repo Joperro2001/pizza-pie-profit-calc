@@ -13,10 +13,21 @@ export interface IngredientCategory {
   ingredients: Ingredient[];
 }
 
+export interface ElectricityCost {
+  country: string;
+  pricePerKWh: number;
+  preheatCost: number;
+  costPerPizza: number;
+  totalFirstPizza: number;
+  additionalPizzaCost: number;
+}
+
 export interface PizzaCostCalculation {
   totalCostFor6Pizzas: number;
   costPerPizza: number;
   sellingPrice: number;
   profitPerPizza: number;
   profitMarginPercentage: number;
+  electricityCost: number;
+  totalCostWithElectricity: number;
 }

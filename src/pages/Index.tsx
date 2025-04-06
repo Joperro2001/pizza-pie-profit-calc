@@ -1,10 +1,12 @@
+
 import React, { useState, useEffect } from "react";
 import { LanguageToggle } from "@/components/LanguageToggle";
 import { IngredientCategory as IngredientCategoryComponent } from "@/components/IngredientCategory";
 import { ProfitMarginInput } from "@/components/ProfitMarginInput";
 import { PizzaPriceResult } from "@/components/PizzaPriceResult";
-import { Ingredient, IngredientCategory, PizzaCostCalculation } from "@/types/pizza";
-import { Pizza, Utensils, DollarSign } from "lucide-react";
+import { ElectricityCostSelector } from "@/components/ElectricityCostSelector";
+import { Ingredient, IngredientCategory, PizzaCostCalculation, ElectricityCost } from "@/types/pizza";
+import { Pizza, Utensils, DollarSign, Lightbulb } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
 import { useLanguage } from "@/contexts/LanguageContext";
 
@@ -40,6 +42,52 @@ const Index = () => {
     }
   ]);
 
+  // Electricity costs data
+  const [electricityCosts] = useState<ElectricityCost[]>([
+    {
+      country: "Germany",
+      pricePerKWh: 0.398,
+      preheatCost: 0.328,
+      costPerPizza: 0.143,
+      totalFirstPizza: 0.471,
+      additionalPizzaCost: 0.143
+    },
+    {
+      country: "France",
+      pricePerKWh: 0.239,
+      preheatCost: 0.197,
+      costPerPizza: 0.086,
+      totalFirstPizza: 0.283,
+      additionalPizzaCost: 0.086
+    },
+    {
+      country: "United Kingdom",
+      pricePerKWh: 0.31,
+      preheatCost: 0.256,
+      costPerPizza: 0.112,
+      totalFirstPizza: 0.368,
+      additionalPizzaCost: 0.112
+    },
+    {
+      country: "Spain",
+      pricePerKWh: 0.25,
+      preheatCost: 0.206,
+      costPerPizza: 0.09,
+      totalFirstPizza: 0.296,
+      additionalPizzaCost: 0.09
+    },
+    {
+      country: "Italy",
+      pricePerKWh: 0.3128,
+      preheatCost: 0.258,
+      costPerPizza: 0.113,
+      totalFirstPizza: 0.371,
+      additionalPizzaCost: 0.113
+    }
+  ]);
+  
+  const [selectedCountry, setSelectedCountry] = useState<string>("");
+  
   // Update category names when language changes
   useEffect(() => {
     setCategories(prevCategories => 
@@ -64,6 +112,8 @@ const Index = () => {
     sellingPrice: 0,
     profitPerPizza: 0,
     profitMarginPercentage: 0,
+    electricityCost: 0,
+    totalCostWithElectricity: 0
   });
 
   // Handle ingredient value change
@@ -87,6 +137,11 @@ const Index = () => {
   const handleProfitMarginChange = (value: number) => {
     setProfitMargin(value);
   };
+  
+  // Handle country selection
+  const handleCountryChange = (country: string) => {
+    setSelectedCountry(country);
+  };
 
   // Calculate pizza costs and selling price
   useEffect(() => {
@@ -101,16 +156,25 @@ const Index = () => {
     // Calculate cost per pizza
     const costPerPizza = totalCostFor6Pizzas / 6;
     
-    // Calculate selling price based on profit margin
-    // For ALL profit margin values:
-    // If margin is 20%, then selling price = cost / (1 - 0.2) = cost / 0.8
-    // If margin is 50%, then selling price = cost / (1 - 0.5) = cost / 0.5
-    // If margin is 150%, then selling price = cost / (1 - 0.6) = cost * 2.5
+    // Get electricity cost if country is selected
+    let electricityCost = 0;
+    if (selectedCountry) {
+      const countryData = electricityCosts.find(cost => cost.country === selectedCountry);
+      if (countryData) {
+        // We'll calculate for 6 pizzas: first pizza plus 5 additional
+        electricityCost = (countryData.totalFirstPizza + (5 * countryData.additionalPizzaCost)) / 6;
+      }
+    }
+    
+    // Calculate total cost with electricity
+    const totalCostWithElectricity = costPerPizza + electricityCost;
+    
+    // Calculate selling price based on profit margin and total cost with electricity
     const marginDecimal = profitMargin / 100;
-    const sellingPrice = costPerPizza * (1 + marginDecimal);
+    const sellingPrice = totalCostWithElectricity * (1 + marginDecimal);
     
     // Calculate profit amount
-    const profitPerPizza = sellingPrice - costPerPizza;
+    const profitPerPizza = sellingPrice - totalCostWithElectricity;
     
     // Update calculation state
     setCalculation({
@@ -119,8 +183,10 @@ const Index = () => {
       sellingPrice,
       profitPerPizza,
       profitMarginPercentage: profitMargin,
+      electricityCost,
+      totalCostWithElectricity
     });
-  }, [categories, profitMargin]);
+  }, [categories, profitMargin, selectedCountry, electricityCosts]);
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-orange-50 to-red-50">
@@ -159,6 +225,12 @@ const Index = () => {
               </div>
             </div>
             
+            <ElectricityCostSelector 
+              selectedCountry={selectedCountry}
+              onCountryChange={handleCountryChange}
+              electricityCosts={electricityCosts}
+            />
+            
             <ProfitMarginInput
               profitMargin={profitMargin}
               onChange={handleProfitMarginChange}
@@ -178,6 +250,7 @@ const Index = () => {
                 <li>{t('step2')}</li>
                 <li>{t('step3')}</li>
                 <li>{t('step4')}</li>
+                <li>{t('electricityStep')}</li>
                 <li>{t('step5')}</li>
               </ul>
               
