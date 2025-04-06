@@ -25,9 +25,19 @@ export function usePizzaCalculator(
     // Get all ingredients
     const allIngredients = categories.flatMap(category => category.ingredients);
     
-    // Calculate total cost for 6 pizzas - only include ingredients with cost > 0
+    // Define essential ingredients that always contribute to cost
+    const essentialIngredientIds = [
+      "flour", "water", "yeast", "salt", "olive-oil", 
+      "tomato-sauce", "mozzarella"
+    ];
+    
+    // Calculate total cost for 6 pizzas
     const totalCostFor6Pizzas = allIngredients.reduce((sum, ingredient) => {
-      return sum + (ingredient.costPerUnit > 0 ? ingredient.costPerUnit * ingredient.amountFor6Pizzas : 0);
+      // Include all dough ingredients and only essential condiments with cost > 0
+      if (essentialIngredientIds.includes(ingredient.id) && ingredient.costPerUnit > 0) {
+        return sum + (ingredient.costPerUnit * ingredient.amountFor6Pizzas);
+      }
+      return sum;
     }, 0);
     
     // Calculate cost per pizza
