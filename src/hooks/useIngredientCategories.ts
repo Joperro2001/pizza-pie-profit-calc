@@ -6,7 +6,7 @@ import { useLanguage } from "@/contexts/LanguageContext";
 export function useIngredientCategories() {
   const { t } = useLanguage();
   
-  // Initial state for ingredient categories
+  // Initial state for ingredient categories with updated costs
   const [categories, setCategories] = useState<IngredientCategory[]>([
     {
       id: "dough",
@@ -14,8 +14,8 @@ export function useIngredientCategories() {
       ingredients: [
         { id: "flour", name: t("flour"), costPerUnit: 1.5, unit: "kg", amountFor6Pizzas: 1 },
         { id: "water", name: t("water"), costPerUnit: 0.1, unit: "L", amountFor6Pizzas: 0.6 },
-        { id: "yeast", name: t("yeast"), costPerUnit: 15, unit: "kg", amountFor6Pizzas: 0.02 },
-        { id: "salt", name: t("salt"), costPerUnit: 1.2, unit: "kg", amountFor6Pizzas: 0.02 },
+        { id: "yeast", name: t("yeast"), costPerUnit: 7, unit: "kg", amountFor6Pizzas: 0.02 },
+        { id: "salt", name: t("salt"), costPerUnit: 1, unit: "kg", amountFor6Pizzas: 0.02 },
         { id: "olive-oil", name: t("oliveOil"), costPerUnit: 10, unit: "L", amountFor6Pizzas: 0.03 },
       ]
     },
@@ -23,8 +23,8 @@ export function useIngredientCategories() {
       id: "condiments",
       name: t("condiments"),
       ingredients: [
-        { id: "tomato-sauce", name: t("tomatoSauce"), costPerUnit: 3.5, unit: "kg", amountFor6Pizzas: 0.5 },
-        { id: "mozzarella", name: t("mozzarella"), costPerUnit: 8, unit: "kg", amountFor6Pizzas: 0.6 },
+        { id: "tomato-sauce", name: t("tomatoSauce"), costPerUnit: 6, unit: "kg", amountFor6Pizzas: 0.5 },
+        { id: "mozzarella", name: t("mozzarella"), costPerUnit: 15, unit: "kg", amountFor6Pizzas: 0.6 },
         { id: "mushrooms", name: t("mushrooms"), costPerUnit: 0, unit: "kg", amountFor6Pizzas: 0.3 },
         { id: "anchovies", name: t("anchovies"), costPerUnit: 0, unit: "kg", amountFor6Pizzas: 0.2 },
         { id: "prosciutto", name: t("prosciutto"), costPerUnit: 0, unit: "kg", amountFor6Pizzas: 0.25 },
