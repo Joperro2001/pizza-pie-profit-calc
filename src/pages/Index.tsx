@@ -29,6 +29,11 @@ const Index = () => {
       ingredients: [
         { id: "tomato-sauce", name: "Tomato Sauce", costPerUnit: 3.5, unit: "kg", amountFor6Pizzas: 0.5 },
         { id: "mozzarella", name: "Mozzarella", costPerUnit: 8, unit: "kg", amountFor6Pizzas: 0.6 },
+        { id: "mushrooms", name: "Mushrooms", costPerUnit: 0, unit: "kg", amountFor6Pizzas: 0.3 },
+        { id: "anchovies", name: "Anchovies", costPerUnit: 0, unit: "kg", amountFor6Pizzas: 0.2 },
+        { id: "prosciutto", name: "Prosciutto", costPerUnit: 0, unit: "kg", amountFor6Pizzas: 0.25 },
+        { id: "salame", name: "Salame", costPerUnit: 0, unit: "kg", amountFor6Pizzas: 0.25 },
+        { id: "zucchini", name: "Zucchini", costPerUnit: 0, unit: "kg", amountFor6Pizzas: 0.3 },
       ]
     }
   ]);
@@ -72,9 +77,9 @@ const Index = () => {
     // Get all ingredients
     const allIngredients = categories.flatMap(category => category.ingredients);
     
-    // Calculate total cost for 6 pizzas
+    // Calculate total cost for 6 pizzas - only include ingredients with cost > 0
     const totalCostFor6Pizzas = allIngredients.reduce((sum, ingredient) => {
-      return sum + (ingredient.costPerUnit * ingredient.amountFor6Pizzas);
+      return sum + (ingredient.costPerUnit > 0 ? ingredient.costPerUnit * ingredient.amountFor6Pizzas : 0);
     }, 0);
     
     // Calculate cost per pizza
@@ -141,6 +146,7 @@ const Index = () => {
               <p className="mb-2">💡 <strong>How it works:</strong></p>
               <ul className="list-disc pl-5 space-y-1">
                 <li>Enter the cost per unit for each ingredient</li>
+                <li>Set cost to 0 for ingredients you're not using</li>
                 <li>The calculator uses a standard recipe for 6 pizzas</li>
                 <li>Adjust the profit margin using the slider</li>
                 <li>See your recommended selling price!</li>
