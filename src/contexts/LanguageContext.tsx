@@ -173,10 +173,7 @@ const translations: Translations = {
     en: 'Cost for 6 Pizzas',
     it: 'Costo per 6 Pizze'
   },
-  costPerPizza: {
-    en: 'Cost per Pizza',
-    it: 'Costo per Pizza'
-  },
+  // Removing this duplicate key - costPerPizza is already defined above
   profitPerPizza: {
     en: 'Profit per Pizza',
     it: 'Profitto per Pizza'
