@@ -2,7 +2,7 @@
 import React from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { PizzaCostCalculation } from "@/types/pizza";
-import { CircleDollarSign, CirclePercent } from "lucide-react";
+import { CircleDollarSign, CirclePercent, Percent, Pizza } from "lucide-react";
 
 interface PizzaPriceResultProps {
   calculation: PizzaCostCalculation;
@@ -14,41 +14,51 @@ export function PizzaPriceResult({ calculation }: PizzaPriceResultProps) {
   };
 
   return (
-    <Card className="border-2 border-primary/40 bg-primary/5">
-      <CardHeader className="pb-2">
-        <CardTitle className="text-xl flex items-center gap-2">
-          <CircleDollarSign className="h-5 w-5" />
-          Final Price Calculation
+    <Card className="border-2 border-red-500/30 bg-gradient-to-br from-red-50 to-orange-50 shadow-md overflow-hidden">
+      <div className="absolute -right-8 -top-8 w-32 h-32 bg-red-500/10 rounded-full blur-xl"></div>
+      <CardHeader className="pb-2 relative z-10">
+        <CardTitle className="text-xl flex items-center gap-2 text-red-800">
+          <Pizza className="h-5 w-5 text-red-500" />
+          Pizza Price Calculation
         </CardTitle>
       </CardHeader>
-      <CardContent>
-        <div className="space-y-4">
+      <CardContent className="relative z-10">
+        <div className="space-y-6">
           <div className="grid grid-cols-2 gap-4">
-            <div className="space-y-1">
-              <p className="text-sm text-muted-foreground">Cost for 6 Pizzas</p>
-              <p className="text-lg font-semibold">€{formatCurrency(calculation.totalCostFor6Pizzas)}</p>
+            <div className="space-y-1 bg-white/60 p-3 rounded-md">
+              <p className="text-xs text-gray-500 uppercase font-medium">Cost for 6 Pizzas</p>
+              <p className="text-lg font-semibold flex items-center gap-1 text-gray-800">
+                €{formatCurrency(calculation.totalCostFor6Pizzas)}
+              </p>
             </div>
-            <div className="space-y-1">
-              <p className="text-sm text-muted-foreground">Cost per Pizza</p>
-              <p className="text-lg font-semibold">€{formatCurrency(calculation.costPerPizza)}</p>
+            <div className="space-y-1 bg-white/60 p-3 rounded-md">
+              <p className="text-xs text-gray-500 uppercase font-medium">Cost per Pizza</p>
+              <p className="text-lg font-semibold flex items-center gap-1 text-gray-800">
+                €{formatCurrency(calculation.costPerPizza)}
+              </p>
             </div>
-            <div className="space-y-1">
-              <p className="text-sm text-muted-foreground">Profit per Pizza</p>
-              <p className="text-lg font-semibold">€{formatCurrency(calculation.profitPerPizza)}</p>
+            <div className="space-y-1 bg-white/60 p-3 rounded-md">
+              <p className="text-xs text-gray-500 uppercase font-medium">Profit per Pizza</p>
+              <p className="text-lg font-semibold flex items-center gap-1 text-green-700">
+                €{formatCurrency(calculation.profitPerPizza)}
+              </p>
             </div>
-            <div className="space-y-1">
-              <p className="text-sm text-muted-foreground">Profit Margin</p>
-              <p className="text-lg font-semibold flex items-center gap-1">
-                <CirclePercent className="h-4 w-4" />
-                {calculation.profitMarginPercentage.toFixed(0)}%
+            <div className="space-y-1 bg-white/60 p-3 rounded-md">
+              <p className="text-xs text-gray-500 uppercase font-medium">Profit Margin</p>
+              <p className="text-lg font-semibold flex items-center gap-1 text-red-600">
+                <Percent className="h-4 w-4" />
+                {calculation.profitMarginPercentage.toFixed(0)}
               </p>
             </div>
           </div>
           
-          <div className="pt-4 border-t">
-            <div className="flex justify-between items-center">
-              <p className="text-lg font-medium">Recommended Selling Price</p>
-              <p className="text-2xl font-bold text-primary">€{formatCurrency(calculation.sellingPrice)}</p>
+          <div className="pt-4 border-t border-red-200">
+            <div className="flex flex-col items-center">
+              <p className="text-sm text-gray-500 uppercase font-medium">Recommended Selling Price</p>
+              <div className="mt-2 relative">
+                <p className="text-3xl font-bold text-red-600 relative z-10">€{formatCurrency(calculation.sellingPrice)}</p>
+                <div className="absolute inset-0 bg-yellow-300/20 blur-sm rounded-full"></div>
+              </div>
             </div>
           </div>
         </div>

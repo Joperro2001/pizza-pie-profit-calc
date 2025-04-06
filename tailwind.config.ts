@@ -19,6 +19,9 @@ export default {
 			}
 		},
 		extend: {
+			fontFamily: {
+				'serif': ['Playfair Display', 'serif'],
+			},
 			colors: {
 				border: 'hsl(var(--border))',
 				input: 'hsl(var(--input))',
@@ -88,13 +91,16 @@ export default {
 				},
 				'pizza-rotate': {
 					'0%': { transform: 'rotate(0deg)' },
-					'100%': { transform: 'rotate(360deg)' }
+					'25%': { transform: 'rotate(5deg)' },
+					'50%': { transform: 'rotate(0deg)' },
+					'75%': { transform: 'rotate(-5deg)' },
+					'100%': { transform: 'rotate(0deg)' }
 				}
 			},
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
 				'accordion-up': 'accordion-up 0.2s ease-out',
-				'pizza-rotate': 'pizza-rotate 30s linear infinite'
+				'pizza-rotate': 'pizza-rotate 6s ease-in-out infinite'
 			}
 		}
 	},

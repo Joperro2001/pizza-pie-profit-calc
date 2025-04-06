@@ -4,7 +4,7 @@ import { IngredientCategory as IngredientCategoryComponent } from "@/components/
 import { ProfitMarginInput } from "@/components/ProfitMarginInput";
 import { PizzaPriceResult } from "@/components/PizzaPriceResult";
 import { Ingredient, IngredientCategory, PizzaCostCalculation } from "@/types/pizza";
-import { Pizza } from "lucide-react";
+import { Pizza, Utensils, DollarSign } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
 
 const Index = () => {
@@ -107,30 +107,39 @@ const Index = () => {
   }, [categories, profitMargin]);
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-background to-secondary/30 pb-12">
-      <header className="bg-primary text-primary-foreground py-6 mb-8 shadow-md">
+    <div className="min-h-screen bg-gradient-to-b from-orange-50 to-red-50">
+      <header className="bg-gradient-to-r from-red-600 to-red-500 text-white py-8 mb-8 shadow-md">
         <div className="container">
           <div className="flex items-center gap-3 justify-center md:justify-start">
-            <Pizza className="h-8 w-8 animate-pizza-rotate" />
-            <h1 className="text-2xl md:text-3xl font-bold">Pizza Profit Calculator</h1>
+            <div className="relative">
+              <Pizza className="h-12 w-12 animate-pizza-rotate text-yellow-100" />
+              <div className="absolute inset-0 bg-gradient-to-tr from-yellow-400 to-red-400 opacity-20 rounded-full blur-sm"></div>
+            </div>
+            <h1 className="text-3xl md:text-4xl font-bold font-serif tracking-tight">Pizza Profit Calculator</h1>
           </div>
-          <p className="text-primary-foreground/80 text-center md:text-left mt-2">
-            Calculate your pizza selling price based on ingredient costs and desired profit margin
+          <p className="text-red-100 text-center md:text-left mt-2 max-w-2xl">
+            Calculate your authentic pizza selling price based on ingredient costs and maximize your profit margin
           </p>
         </div>
       </header>
       
-      <main className="container">
+      <main className="container mb-16">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           <div className="lg:col-span-2 space-y-8">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {categories.map(category => (
-                <IngredientCategoryComponent
-                  key={category.id}
-                  category={category}
-                  onIngredientChange={handleIngredientChange}
-                />
-              ))}
+            <div className="p-4 bg-white/80 backdrop-blur-sm rounded-lg shadow-sm border border-red-100">
+              <div className="flex items-center mb-4 gap-2">
+                <Utensils className="h-5 w-5 text-red-500" />
+                <h2 className="text-xl font-medium text-red-800">Ingredients</h2>
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {categories.map(category => (
+                  <IngredientCategoryComponent
+                    key={category.id}
+                    category={category}
+                    onIngredientChange={handleIngredientChange}
+                  />
+                ))}
+              </div>
             </div>
             
             <ProfitMarginInput
@@ -142,22 +151,36 @@ const Index = () => {
           <div className="sticky top-4 h-fit lg:col-span-1">
             <PizzaPriceResult calculation={calculation} />
             
-            <div className="mt-6 text-sm text-muted-foreground">
-              <p className="mb-2">💡 <strong>How it works:</strong></p>
-              <ul className="list-disc pl-5 space-y-1">
+            <div className="mt-6 p-4 bg-white/80 backdrop-blur-sm rounded-lg border border-red-100 shadow-sm text-sm text-gray-700">
+              <div className="flex items-center gap-2 mb-2">
+                <DollarSign className="h-5 w-5 text-green-500" />
+                <p className="font-medium text-base">How it works:</p>
+              </div>
+              <ul className="list-disc pl-5 space-y-2">
                 <li>Enter the cost per unit for each ingredient</li>
                 <li>Set cost to 0 for ingredients you're not using</li>
                 <li>The calculator uses a standard recipe for 6 pizzas</li>
                 <li>Adjust the profit margin using the slider</li>
                 <li>See your recommended selling price!</li>
               </ul>
+              
+              <div className="mt-4 pt-4 border-t border-red-100 text-center">
+                <p className="italic text-red-600">"The secret to success is not the sauce, it's the profit margin!"</p>
+              </div>
             </div>
           </div>
         </div>
       </main>
       
-      <footer className="mt-16 text-center text-sm text-muted-foreground">
-        <p>© {new Date().getFullYear()} Pizza Profit Calculator</p>
+      <footer className="py-6 bg-red-600/10 text-center text-sm text-red-700">
+        <div className="container">
+          <p>© {new Date().getFullYear()} Pizza Profit Calculator | <span className="italic">Making pizza profitable, one slice at a time</span></p>
+          <div className="flex justify-center gap-2 mt-2">
+            <Pizza className="h-4 w-4" />
+            <Pizza className="h-4 w-4" />
+            <Pizza className="h-4 w-4" />
+          </div>
+        </div>
       </footer>
     </div>
   );
