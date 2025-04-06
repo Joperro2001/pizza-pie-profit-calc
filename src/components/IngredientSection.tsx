@@ -19,7 +19,7 @@ export function IngredientSection({ categories, onIngredientChange }: Ingredient
         <Utensils className="h-5 w-5 text-red-500" />
         <h2 className="text-xl font-medium text-red-800">{t('ingredients')}</h2>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div className="space-y-6">
         {categories.map(category => (
           <IngredientCategoryComponent
             key={category.id}

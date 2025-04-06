@@ -63,6 +63,55 @@ export const ingredientTranslations: TranslationObject = {
     en: 'Zucchini',
     it: 'Zucchine'
   },
+  // New ingredients
+  basil: {
+    en: 'Basil',
+    it: 'Basilico'
+  },
+  oregano: {
+    en: 'Oregano',
+    it: 'Origano'
+  },
+  olives: {
+    en: 'Olives',
+    it: 'Olive'
+  },
+  bellPeppers: {
+    en: 'Bell Peppers',
+    it: 'Peperoni'
+  },
+  onions: {
+    en: 'Onions',
+    it: 'Cipolle'
+  },
+  garlic: {
+    en: 'Garlic',
+    it: 'Aglio'
+  },
+  ham: {
+    en: 'Ham',
+    it: 'Prosciutto Cotto'
+  },
+  artichokes: {
+    en: 'Artichokes',
+    it: 'Carciofi'
+  },
+  tuna: {
+    en: 'Tuna',
+    it: 'Tonno'
+  },
+  gorgonzola: {
+    en: 'Gorgonzola',
+    it: 'Gorgonzola'
+  },
+  ricotta: {
+    en: 'Ricotta',
+    it: 'Ricotta'
+  },
+  parmesan: {
+    en: 'Parmesan',
+    it: 'Parmigiano'
+  },
   forSixPizzas: {
     en: 'For 6 pizzas',
     it: 'Per 6 pizze'

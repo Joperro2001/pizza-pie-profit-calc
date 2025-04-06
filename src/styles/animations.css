@@ -11,3 +11,33 @@
 .animate-pizza-rotate {
   animation: pizza-rotate 30s linear infinite;
 }
+
+@keyframes ingredient-bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+.animate-ingredient-bounce {
+  animation: ingredient-bounce 2s ease-in-out infinite;
+}
+
+@keyframes cheese-stretch {
+  0% {
+    transform: scaleY(1);
+  }
+  50% {
+    transform: scaleY(1.2);
+  }
+  100% {
+    transform: scaleY(1);
+  }
+}
+
+.animate-cheese-stretch {
+  animation: cheese-stretch 3s ease-in-out infinite;
+  transform-origin: bottom;
+}

@@ -3,6 +3,7 @@ import React from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { IngredientInput } from "./IngredientInput";
 import { Ingredient, IngredientCategory as IngredientCategoryType } from "@/types/pizza";
+import { Pizza, Utensils } from "lucide-react";
 
 interface IngredientCategoryProps {
   category: IngredientCategoryType;
@@ -17,14 +18,14 @@ export function IngredientCategory({ category, onIngredientChange }: IngredientC
   const getCategoryIcon = () => {
     if (category.id === "dough") {
       return (
-        <div className="h-5 w-5 rounded-full bg-yellow-100 flex items-center justify-center">
-          <span className="text-xs text-yellow-800">🍞</span>
+        <div className="h-6 w-6 rounded-full bg-yellow-100 flex items-center justify-center">
+          <Utensils className="h-4 w-4 text-yellow-800" />
         </div>
       );
     } else {
       return (
-        <div className="h-5 w-5 rounded-full bg-red-100 flex items-center justify-center">
-          <span className="text-xs text-red-800">🧀</span>
+        <div className="h-6 w-6 rounded-full bg-red-100 flex items-center justify-center">
+          <Pizza className="h-4 w-4 text-red-800" />
         </div>
       );
     }
@@ -39,7 +40,7 @@ export function IngredientCategory({ category, onIngredientChange }: IngredientC
         </CardTitle>
       </CardHeader>
       <CardContent>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
           {category.ingredients.map((ingredient) => (
             <IngredientInput
               key={ingredient.id}
