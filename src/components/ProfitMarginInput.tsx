@@ -13,7 +13,7 @@ interface ProfitMarginInputProps {
 export function ProfitMarginInput({ profitMargin, onChange }: ProfitMarginInputProps) {
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value === "" ? 0 : parseFloat(e.target.value);
-    if (value >= 0 && value <= 100) {
+    if (value >= 0 && value <= 500) {
       onChange(value);
     }
   };
@@ -37,7 +37,7 @@ export function ProfitMarginInput({ profitMargin, onChange }: ProfitMarginInputP
                   id="profit-margin"
                   type="number"
                   min="0"
-                  max="100"
+                  max="500"
                   value={profitMargin}
                   onChange={handleInputChange}
                   className="pl-7"
@@ -48,16 +48,16 @@ export function ProfitMarginInput({ profitMargin, onChange }: ProfitMarginInputP
             <Slider
               value={[profitMargin]}
               min={0}
-              max={100}
-              step={1}
+              max={500}
+              step={5}
               onValueChange={handleSliderChange}
               className="py-2"
             />
           </div>
           <div className="flex justify-between text-sm text-muted-foreground">
             <span>0%</span>
-            <span>50%</span>
-            <span>100%</span>
+            <span>250%</span>
+            <span>500%</span>
           </div>
         </div>
       </CardContent>
