@@ -16,6 +16,9 @@ export function PizzaPriceResult({ calculation }: PizzaPriceResultProps) {
     return value.toFixed(2);
   };
 
+  // Calculate the total cost for 6 pizzas including electricity
+  const totalCostFor6PizzasWithElectricity = calculation.totalCostFor6Pizzas + (calculation.electricityCost * 6);
+
   return (
     <Card className="border-2 border-red-500/30 bg-gradient-to-br from-red-50 to-orange-50 shadow-md overflow-hidden">
       <div className="absolute -right-8 -top-8 w-32 h-32 bg-red-500/10 rounded-full blur-xl"></div>
@@ -31,14 +34,26 @@ export function PizzaPriceResult({ calculation }: PizzaPriceResultProps) {
             <div className="space-y-1 bg-white/60 p-3 rounded-md">
               <p className="text-xs text-gray-500 uppercase font-medium">{t('costFor6Pizzas')}</p>
               <p className="text-lg font-semibold flex items-center gap-1 text-gray-800">
-                €{formatCurrency(calculation.totalCostFor6Pizzas)}
+                €{formatCurrency(totalCostFor6PizzasWithElectricity)}
               </p>
+              {calculation.electricityCost > 0 && (
+                <p className="text-xs text-yellow-600 flex items-center gap-1">
+                  <Lightbulb className="h-3 w-3" />
+                  {t('forSixPizzas')}: €{formatCurrency(calculation.electricityCost * 6)}
+                </p>
+              )}
             </div>
             <div className="space-y-1 bg-white/60 p-3 rounded-md">
               <p className="text-xs text-gray-500 uppercase font-medium">{t('costPerPizza')}</p>
               <p className="text-lg font-semibold flex items-center gap-1 text-gray-800">
-                €{formatCurrency(calculation.costPerPizza)}
+                €{formatCurrency(calculation.totalCostWithElectricity)}
               </p>
+              {calculation.electricityCost > 0 && (
+                <p className="text-xs text-yellow-600 flex items-center gap-1">
+                  <Lightbulb className="h-3 w-3" />
+                  €{formatCurrency(calculation.electricityCost)}
+                </p>
+              )}
             </div>
             
             {calculation.electricityCost > 0 && (
@@ -73,12 +88,6 @@ export function PizzaPriceResult({ calculation }: PizzaPriceResultProps) {
                 <p className="text-3xl font-bold text-red-600 relative z-10">€{formatCurrency(calculation.sellingPrice)}</p>
                 <div className="absolute inset-0 bg-yellow-300/20 blur-sm rounded-full"></div>
               </div>
-              
-              {calculation.electricityCost > 0 && (
-                <div className="mt-2 text-sm text-gray-600">
-                  <p>{t('totalCostWithElectricity')}: €{formatCurrency(calculation.totalCostWithElectricity)}</p>
-                </div>
-              )}
             </div>
           </div>
         </div>
