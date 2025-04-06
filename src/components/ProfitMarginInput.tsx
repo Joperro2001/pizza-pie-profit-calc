@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Slider } from "@/components/ui/slider";
 import { Percent } from "lucide-react";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 interface ProfitMarginInputProps {
   profitMargin: number;
@@ -12,6 +13,8 @@ interface ProfitMarginInputProps {
 }
 
 export function ProfitMarginInput({ profitMargin, onChange }: ProfitMarginInputProps) {
+  const { t } = useLanguage();
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value === "" ? 0 : parseFloat(e.target.value);
     if (value >= 0 && value <= 500) {
@@ -28,14 +31,14 @@ export function ProfitMarginInput({ profitMargin, onChange }: ProfitMarginInputP
       <CardHeader className="pb-2">
         <CardTitle className="text-xl flex items-center gap-2 text-red-800">
           <Percent className="h-5 w-5 text-red-500" />
-          Profit Margin
+          {t('profitMargin')}
         </CardTitle>
       </CardHeader>
       <CardContent>
         <div className="space-y-5">
           <div className="space-y-3">
             <div className="flex items-center justify-between">
-              <Label htmlFor="profit-margin" className="text-gray-700">Profit Margin (%)</Label>
+              <Label htmlFor="profit-margin" className="text-gray-700">{t('profitMarginPercentage')}</Label>
               <div className="w-24 relative">
                 <Input
                   id="profit-margin"
@@ -69,11 +72,11 @@ export function ProfitMarginInput({ profitMargin, onChange }: ProfitMarginInputP
           <div className="pt-3 mt-3 border-t border-red-100 text-sm text-gray-600">
             <p className="flex items-center gap-1">
               <span className="inline-block w-3 h-3 bg-green-500 rounded-full"></span>
-              <span>Lower margins: More competitive pricing</span>
+              <span>{t('lowerMargins')}</span>
             </p>
             <p className="flex items-center gap-1 mt-1">
               <span className="inline-block w-3 h-3 bg-red-500 rounded-full"></span>
-              <span>Higher margins: Better profit per pizza</span>
+              <span>{t('higherMargins')}</span>
             </p>
           </div>
         </div>

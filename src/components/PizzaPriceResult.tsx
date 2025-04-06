@@ -3,12 +3,15 @@ import React from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { PizzaCostCalculation } from "@/types/pizza";
 import { CircleDollarSign, CirclePercent, Percent, Pizza } from "lucide-react";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 interface PizzaPriceResultProps {
   calculation: PizzaCostCalculation;
 }
 
 export function PizzaPriceResult({ calculation }: PizzaPriceResultProps) {
+  const { t } = useLanguage();
+
   const formatCurrency = (value: number) => {
     return value.toFixed(2);
   };
@@ -19,32 +22,32 @@ export function PizzaPriceResult({ calculation }: PizzaPriceResultProps) {
       <CardHeader className="pb-2 relative z-10">
         <CardTitle className="text-xl flex items-center gap-2 text-red-800">
           <Pizza className="h-5 w-5 text-red-500" />
-          Pizza Price Calculation
+          {t('pizzaPriceCalculation')}
         </CardTitle>
       </CardHeader>
       <CardContent className="relative z-10">
         <div className="space-y-6">
           <div className="grid grid-cols-2 gap-4">
             <div className="space-y-1 bg-white/60 p-3 rounded-md">
-              <p className="text-xs text-gray-500 uppercase font-medium">Cost for 6 Pizzas</p>
+              <p className="text-xs text-gray-500 uppercase font-medium">{t('costFor6Pizzas')}</p>
               <p className="text-lg font-semibold flex items-center gap-1 text-gray-800">
                 €{formatCurrency(calculation.totalCostFor6Pizzas)}
               </p>
             </div>
             <div className="space-y-1 bg-white/60 p-3 rounded-md">
-              <p className="text-xs text-gray-500 uppercase font-medium">Cost per Pizza</p>
+              <p className="text-xs text-gray-500 uppercase font-medium">{t('costPerPizza')}</p>
               <p className="text-lg font-semibold flex items-center gap-1 text-gray-800">
                 €{formatCurrency(calculation.costPerPizza)}
               </p>
             </div>
             <div className="space-y-1 bg-white/60 p-3 rounded-md">
-              <p className="text-xs text-gray-500 uppercase font-medium">Profit per Pizza</p>
+              <p className="text-xs text-gray-500 uppercase font-medium">{t('profitPerPizza')}</p>
               <p className="text-lg font-semibold flex items-center gap-1 text-green-700">
                 €{formatCurrency(calculation.profitPerPizza)}
               </p>
             </div>
             <div className="space-y-1 bg-white/60 p-3 rounded-md">
-              <p className="text-xs text-gray-500 uppercase font-medium">Profit Margin</p>
+              <p className="text-xs text-gray-500 uppercase font-medium">{t('profitMargin')}</p>
               <p className="text-lg font-semibold flex items-center gap-1 text-red-600">
                 <Percent className="h-4 w-4" />
                 {calculation.profitMarginPercentage.toFixed(0)}
@@ -54,7 +57,7 @@ export function PizzaPriceResult({ calculation }: PizzaPriceResultProps) {
           
           <div className="pt-4 border-t border-red-200">
             <div className="flex flex-col items-center">
-              <p className="text-sm text-gray-500 uppercase font-medium">Recommended Selling Price</p>
+              <p className="text-sm text-gray-500 uppercase font-medium">{t('recommendedSellingPrice')}</p>
               <div className="mt-2 relative">
                 <p className="text-3xl font-bold text-red-600 relative z-10">€{formatCurrency(calculation.sellingPrice)}</p>
                 <div className="absolute inset-0 bg-yellow-300/20 blur-sm rounded-full"></div>

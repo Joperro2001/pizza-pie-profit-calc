@@ -1,42 +1,58 @@
-
 import React, { useState, useEffect } from "react";
+import { LanguageToggle } from "@/components/LanguageToggle";
 import { IngredientCategory as IngredientCategoryComponent } from "@/components/IngredientCategory";
 import { ProfitMarginInput } from "@/components/ProfitMarginInput";
 import { PizzaPriceResult } from "@/components/PizzaPriceResult";
 import { Ingredient, IngredientCategory, PizzaCostCalculation } from "@/types/pizza";
 import { Pizza, Utensils, DollarSign } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const Index = () => {
   const { toast } = useToast();
+  const { t } = useLanguage();
   
   // Initial state for ingredient categories
   const [categories, setCategories] = useState<IngredientCategory[]>([
     {
       id: "dough",
-      name: "Dough Ingredients",
+      name: t("doughIngredients"),
       ingredients: [
-        { id: "flour", name: "Flour", costPerUnit: 1.5, unit: "kg", amountFor6Pizzas: 1 },
-        { id: "water", name: "Water", costPerUnit: 0.1, unit: "L", amountFor6Pizzas: 0.6 },
-        { id: "yeast", name: "Yeast", costPerUnit: 15, unit: "kg", amountFor6Pizzas: 0.02 },
-        { id: "salt", name: "Salt", costPerUnit: 1.2, unit: "kg", amountFor6Pizzas: 0.02 },
-        { id: "olive-oil", name: "Olive Oil", costPerUnit: 10, unit: "L", amountFor6Pizzas: 0.03 },
+        { id: "flour", name: t("flour"), costPerUnit: 1.5, unit: "kg", amountFor6Pizzas: 1 },
+        { id: "water", name: t("water"), costPerUnit: 0.1, unit: "L", amountFor6Pizzas: 0.6 },
+        { id: "yeast", name: t("yeast"), costPerUnit: 15, unit: "kg", amountFor6Pizzas: 0.02 },
+        { id: "salt", name: t("salt"), costPerUnit: 1.2, unit: "kg", amountFor6Pizzas: 0.02 },
+        { id: "olive-oil", name: t("oliveOil"), costPerUnit: 10, unit: "L", amountFor6Pizzas: 0.03 },
       ]
     },
     {
       id: "condiments",
-      name: "Condiments",
+      name: t("condiments"),
       ingredients: [
-        { id: "tomato-sauce", name: "Tomato Sauce", costPerUnit: 3.5, unit: "kg", amountFor6Pizzas: 0.5 },
-        { id: "mozzarella", name: "Mozzarella", costPerUnit: 8, unit: "kg", amountFor6Pizzas: 0.6 },
-        { id: "mushrooms", name: "Mushrooms", costPerUnit: 0, unit: "kg", amountFor6Pizzas: 0.3 },
-        { id: "anchovies", name: "Anchovies", costPerUnit: 0, unit: "kg", amountFor6Pizzas: 0.2 },
-        { id: "prosciutto", name: "Prosciutto", costPerUnit: 0, unit: "kg", amountFor6Pizzas: 0.25 },
-        { id: "salame", name: "Salame", costPerUnit: 0, unit: "kg", amountFor6Pizzas: 0.25 },
-        { id: "zucchini", name: "Zucchini", costPerUnit: 0, unit: "kg", amountFor6Pizzas: 0.3 },
+        { id: "tomato-sauce", name: t("tomatoSauce"), costPerUnit: 3.5, unit: "kg", amountFor6Pizzas: 0.5 },
+        { id: "mozzarella", name: t("mozzarella"), costPerUnit: 8, unit: "kg", amountFor6Pizzas: 0.6 },
+        { id: "mushrooms", name: t("mushrooms"), costPerUnit: 0, unit: "kg", amountFor6Pizzas: 0.3 },
+        { id: "anchovies", name: t("anchovies"), costPerUnit: 0, unit: "kg", amountFor6Pizzas: 0.2 },
+        { id: "prosciutto", name: t("prosciutto"), costPerUnit: 0, unit: "kg", amountFor6Pizzas: 0.25 },
+        { id: "salame", name: t("salame"), costPerUnit: 0, unit: "kg", amountFor6Pizzas: 0.25 },
+        { id: "zucchini", name: t("zucchini"), costPerUnit: 0, unit: "kg", amountFor6Pizzas: 0.3 },
       ]
     }
   ]);
+
+  // Update category names when language changes
+  useEffect(() => {
+    setCategories(prevCategories => 
+      prevCategories.map(category => ({
+        ...category,
+        name: t(category.id === "dough" ? "doughIngredients" : "condiments"),
+        ingredients: category.ingredients.map(ingredient => ({
+          ...ingredient,
+          name: t(ingredient.id.replace(/-/g, ''))
+        }))
+      }))
+    );
+  }, [t]);
 
   // Profit margin state
   const [profitMargin, setProfitMargin] = useState<number>(50);
@@ -108,6 +124,7 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-orange-50 to-red-50">
+      <LanguageToggle />
       <header className="bg-gradient-to-r from-red-600 to-red-500 text-white py-8 mb-8 shadow-md">
         <div className="container">
           <div className="flex items-center gap-3 justify-center md:justify-start">
@@ -115,10 +132,10 @@ const Index = () => {
               <Pizza className="h-12 w-12 animate-pizza-rotate text-yellow-100" />
               <div className="absolute inset-0 bg-gradient-to-tr from-yellow-400 to-red-400 opacity-20 rounded-full blur-sm"></div>
             </div>
-            <h1 className="text-3xl md:text-4xl font-bold font-serif tracking-tight">Pizza Profit Calculator</h1>
+            <h1 className="text-3xl md:text-4xl font-bold font-serif tracking-tight">{t('appTitle')}</h1>
           </div>
           <p className="text-red-100 text-center md:text-left mt-2 max-w-2xl">
-            Calculate your authentic pizza selling price based on ingredient costs and maximize your profit margin
+            {t('appSubtitle')}
           </p>
         </div>
       </header>
@@ -129,7 +146,7 @@ const Index = () => {
             <div className="p-4 bg-white/80 backdrop-blur-sm rounded-lg shadow-sm border border-red-100">
               <div className="flex items-center mb-4 gap-2">
                 <Utensils className="h-5 w-5 text-red-500" />
-                <h2 className="text-xl font-medium text-red-800">Ingredients</h2>
+                <h2 className="text-xl font-medium text-red-800">{t('ingredients')}</h2>
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {categories.map(category => (
@@ -154,18 +171,18 @@ const Index = () => {
             <div className="mt-6 p-4 bg-white/80 backdrop-blur-sm rounded-lg border border-red-100 shadow-sm text-sm text-gray-700">
               <div className="flex items-center gap-2 mb-2">
                 <DollarSign className="h-5 w-5 text-green-500" />
-                <p className="font-medium text-base">How it works:</p>
+                <p className="font-medium text-base">{t('howItWorks')}</p>
               </div>
               <ul className="list-disc pl-5 space-y-2">
-                <li>Enter the cost per unit for each ingredient</li>
-                <li>Set cost to 0 for ingredients you're not using</li>
-                <li>The calculator uses a standard recipe for 6 pizzas</li>
-                <li>Adjust the profit margin using the slider</li>
-                <li>See your recommended selling price!</li>
+                <li>{t('step1')}</li>
+                <li>{t('step2')}</li>
+                <li>{t('step3')}</li>
+                <li>{t('step4')}</li>
+                <li>{t('step5')}</li>
               </ul>
               
               <div className="mt-4 pt-4 border-t border-red-100 text-center">
-                <p className="italic text-red-600">"The secret to success is not the sauce, it's the profit margin!"</p>
+                <p className="italic text-red-600">{t('quote')}</p>
               </div>
             </div>
           </div>
@@ -174,7 +191,7 @@ const Index = () => {
       
       <footer className="py-6 bg-red-600/10 text-center text-sm text-red-700">
         <div className="container">
-          <p>© {new Date().getFullYear()} Pizza Profit Calculator | <span className="italic">Making pizza profitable, one slice at a time</span></p>
+          <p>© {new Date().getFullYear()} {t('appTitle')} | <span className="italic">{t('copyright')}</span></p>
           <div className="flex justify-center gap-2 mt-2">
             <Pizza className="h-4 w-4" />
             <Pizza className="h-4 w-4" />
