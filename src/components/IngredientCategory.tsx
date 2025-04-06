@@ -46,7 +46,6 @@ export function IngredientCategory({ category, onIngredientChange }: IngredientC
               key={ingredient.id}
               ingredient={ingredient}
               onChange={handleIngredientChange}
-              showPriceInput={category.id === "dough" || ingredient.id === "tomato-sauce" || ingredient.id === "mozzarella"}
             />
           ))}
         </div>
