@@ -8,8 +8,10 @@ import { PageHeader } from "@/components/PageHeader";
 import { PageFooter } from "@/components/PageFooter";
 import { HowItWorks } from "@/components/HowItWorks";
 import { IngredientSection } from "@/components/IngredientSection";
+import { BusinessCostInput } from "@/components/BusinessCostInput";
 import { useIngredientCategories } from "@/hooks/useIngredientCategories";
 import { useElectricityCosts } from "@/hooks/useElectricityCosts";
+import { useBusinessCosts } from "@/hooks/useBusinessCosts";
 import { usePizzaCalculator } from "@/hooks/usePizzaCalculator";
 
 const Index = () => {
@@ -19,13 +21,24 @@ const Index = () => {
   // Custom hooks for state management
   const { categories, handleIngredientChange } = useIngredientCategories();
   const { electricityCosts, selectedCountry, handleCountryChange } = useElectricityCosts();
+  const { 
+    businessCosts, 
+    handleCostChange, 
+    calculateBusinessCostsPerPizza,
+    pizzasPerMonth,
+    setPizzasPerMonth
+  } = useBusinessCosts();
+  
+  // Calculate business costs per pizza
+  const businessCostsPerPizza = calculateBusinessCostsPerPizza();
   
   // Calculate the pizza price and costs
   const calculation = usePizzaCalculator(
     categories,
     profitMargin,
     selectedCountry,
-    electricityCosts
+    electricityCosts,
+    businessCostsPerPizza
   );
 
   // Handle profit margin change
@@ -50,6 +63,13 @@ const Index = () => {
               selectedCountry={selectedCountry}
               onCountryChange={handleCountryChange}
               electricityCosts={electricityCosts}
+            />
+            
+            <BusinessCostInput
+              businessCosts={businessCosts}
+              onCostChange={handleCostChange}
+              pizzasPerMonth={pizzasPerMonth}
+              onPizzasPerMonthChange={setPizzasPerMonth}
             />
             
             <ProfitMarginInput

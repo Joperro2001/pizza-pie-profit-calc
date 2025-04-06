@@ -6,7 +6,8 @@ export function usePizzaCalculator(
   categories: IngredientCategory[],
   profitMargin: number,
   selectedCountry: string,
-  electricityCosts: ElectricityCost[]
+  electricityCosts: ElectricityCost[],
+  businessCostsPerPizza: number = 0
 ) {
   const [calculation, setCalculation] = useState<PizzaCostCalculation>({
     totalCostFor6Pizzas: 0,
@@ -15,7 +16,9 @@ export function usePizzaCalculator(
     profitPerPizza: 0,
     profitMarginPercentage: 0,
     electricityCost: 0,
-    totalCostWithElectricity: 0
+    totalCostWithElectricity: 0,
+    businessCostsPerPizza: 0,
+    totalCostWithBusinessCosts: 0
   });
 
   useEffect(() => {
@@ -43,12 +46,15 @@ export function usePizzaCalculator(
     // Calculate total cost with electricity
     const totalCostWithElectricity = costPerPizza + electricityCost;
     
-    // Calculate selling price based on profit margin and total cost with electricity
+    // Add business costs
+    const totalCostWithBusinessCosts = totalCostWithElectricity + businessCostsPerPizza;
+    
+    // Calculate selling price based on profit margin and total cost with all expenses
     const marginDecimal = profitMargin / 100;
-    const sellingPrice = totalCostWithElectricity * (1 + marginDecimal);
+    const sellingPrice = totalCostWithBusinessCosts * (1 + marginDecimal);
     
     // Calculate profit amount
-    const profitPerPizza = sellingPrice - totalCostWithElectricity;
+    const profitPerPizza = sellingPrice - totalCostWithBusinessCosts;
     
     // Update calculation state
     setCalculation({
@@ -58,9 +64,11 @@ export function usePizzaCalculator(
       profitPerPizza,
       profitMarginPercentage: profitMargin,
       electricityCost,
-      totalCostWithElectricity
+      totalCostWithElectricity,
+      businessCostsPerPizza,
+      totalCostWithBusinessCosts
     });
-  }, [categories, profitMargin, selectedCountry, electricityCosts]);
+  }, [categories, profitMargin, selectedCountry, electricityCosts, businessCostsPerPizza]);
 
   return calculation;
 }

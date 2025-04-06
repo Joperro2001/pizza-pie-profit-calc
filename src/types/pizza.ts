@@ -22,6 +22,13 @@ export interface ElectricityCost {
   additionalPizzaCost: number;
 }
 
+export interface BusinessCost {
+  id: string;
+  name: string;
+  monthlyCost: number;
+  enabled: boolean;
+}
+
 export interface PizzaCostCalculation {
   totalCostFor6Pizzas: number;
   costPerPizza: number;
@@ -30,4 +37,6 @@ export interface PizzaCostCalculation {
   profitMarginPercentage: number;
   electricityCost: number;
   totalCostWithElectricity: number;
+  businessCostsPerPizza: number;
+  totalCostWithBusinessCosts: number;
 }
