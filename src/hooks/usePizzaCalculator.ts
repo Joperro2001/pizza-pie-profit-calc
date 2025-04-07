@@ -7,7 +7,9 @@ export function usePizzaCalculator(
   profitMargin: number,
   selectedCountry: string,
   electricityCosts: ElectricityCost[],
-  businessCostsPerPizza: number = 0
+  businessCostsPerPizza: number = 0,
+  calculationMode: "setProfit" | "calculateProfit" = "setProfit",
+  sellingPrice: number = 0
 ) {
   const [calculation, setCalculation] = useState<PizzaCostCalculation>({
     totalCostFor6Pizzas: 0,
@@ -49,26 +51,44 @@ export function usePizzaCalculator(
     // Add business costs
     const totalCostWithBusinessCosts = totalCostWithElectricity + businessCostsPerPizza;
     
-    // Calculate selling price based on profit margin and total cost with all expenses
-    const marginDecimal = profitMargin / 100;
-    const sellingPrice = totalCostWithBusinessCosts * (1 + marginDecimal);
+    let calculatedSellingPrice = 0;
+    let calculatedProfitPerPizza = 0;
+    let calculatedProfitMarginPercentage = 0;
     
-    // Calculate profit amount
-    const profitPerPizza = sellingPrice - totalCostWithBusinessCosts;
+    if (calculationMode === "setProfit") {
+      // Calculate selling price based on profit margin and total cost with all expenses
+      const marginDecimal = profitMargin / 100;
+      calculatedSellingPrice = totalCostWithBusinessCosts * (1 + marginDecimal);
+      
+      // Calculate profit amount
+      calculatedProfitPerPizza = calculatedSellingPrice - totalCostWithBusinessCosts;
+      calculatedProfitMarginPercentage = profitMargin;
+    } else {
+      // In calculateProfit mode, we already have the selling price
+      calculatedSellingPrice = sellingPrice;
+      
+      // Calculate profit amount
+      calculatedProfitPerPizza = calculatedSellingPrice - totalCostWithBusinessCosts;
+      
+      // Calculate profit margin percentage
+      if (totalCostWithBusinessCosts > 0) {
+        calculatedProfitMarginPercentage = (calculatedProfitPerPizza / totalCostWithBusinessCosts) * 100;
+      }
+    }
     
     // Update calculation state
     setCalculation({
       totalCostFor6Pizzas,
       costPerPizza,
-      sellingPrice,
-      profitPerPizza,
-      profitMarginPercentage: profitMargin,
+      sellingPrice: calculatedSellingPrice,
+      profitPerPizza: calculatedProfitPerPizza,
+      profitMarginPercentage: calculatedProfitMarginPercentage,
       electricityCost,
       totalCostWithElectricity,
       businessCostsPerPizza,
       totalCostWithBusinessCosts
     });
-  }, [categories, profitMargin, selectedCountry, electricityCosts, businessCostsPerPizza]);
+  }, [categories, profitMargin, selectedCountry, electricityCosts, businessCostsPerPizza, calculationMode, sellingPrice]);
 
   return calculation;
 }

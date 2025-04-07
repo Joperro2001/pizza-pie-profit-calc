@@ -40,3 +40,5 @@ export interface PizzaCostCalculation {
   businessCostsPerPizza: number;
   totalCostWithBusinessCosts: number;
 }
+
+export type CalculationMode = "setProfit" | "calculateProfit";

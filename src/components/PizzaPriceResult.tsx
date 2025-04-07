@@ -2,14 +2,15 @@
 import React from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { PizzaCostCalculation } from "@/types/pizza";
-import { CircleDollarSign, CirclePercent, Percent, Pizza, Lightbulb, Building } from "lucide-react";
+import { CircleDollarSign, CirclePercent, Percent, Pizza, Lightbulb, Building, TrendingUp } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 
 interface PizzaPriceResultProps {
   calculation: PizzaCostCalculation;
+  mode: "setProfit" | "calculateProfit";
 }
 
-export function PizzaPriceResult({ calculation }: PizzaPriceResultProps) {
+export function PizzaPriceResult({ calculation, mode }: PizzaPriceResultProps) {
   const { t } = useLanguage();
 
   const formatCurrency = (value: number) => {
@@ -20,12 +21,14 @@ export function PizzaPriceResult({ calculation }: PizzaPriceResultProps) {
   const totalCostFor6PizzasWithElectricity = calculation.totalCostFor6Pizzas + (calculation.electricityCost * 6);
 
   return (
-    <Card className="border-2 border-red-500/30 bg-gradient-to-br from-red-50 to-orange-50 shadow-md overflow-hidden">
+    <Card className="border-2 border-red-500/30 bg-gradient-to-br from-red-50 to-orange-50 shadow-md overflow-hidden mb-6">
       <div className="absolute -right-8 -top-8 w-32 h-32 bg-red-500/10 rounded-full blur-xl"></div>
       <CardHeader className="pb-2 relative z-10">
         <CardTitle className="text-xl flex items-center gap-2 text-red-800">
           <Pizza className="h-5 w-5 text-red-500" />
-          {t('pizzaPriceCalculation')}
+          {mode === "setProfit" 
+            ? t('pizzaPriceCalculation') 
+            : t('profitMarginCalculation')}
         </CardTitle>
       </CardHeader>
       <CardContent className="relative z-10">
@@ -93,11 +96,26 @@ export function PizzaPriceResult({ calculation }: PizzaPriceResultProps) {
           
           <div className="pt-4 border-t border-red-200">
             <div className="flex flex-col items-center">
-              <p className="text-sm text-gray-500 uppercase font-medium">{t('recommendedSellingPrice')}</p>
-              <div className="mt-2 relative">
-                <p className="text-3xl font-bold text-red-600 relative z-10">€{formatCurrency(calculation.sellingPrice)}</p>
-                <div className="absolute inset-0 bg-yellow-300/20 blur-sm rounded-full"></div>
-              </div>
+              {mode === "setProfit" ? (
+                <>
+                  <p className="text-sm text-gray-500 uppercase font-medium">{t('recommendedSellingPrice')}</p>
+                  <div className="mt-2 relative">
+                    <p className="text-3xl font-bold text-red-600 relative z-10">€{formatCurrency(calculation.sellingPrice)}</p>
+                    <div className="absolute inset-0 bg-yellow-300/20 blur-sm rounded-full"></div>
+                  </div>
+                </>
+              ) : (
+                <>
+                  <p className="text-sm text-gray-500 uppercase font-medium">{t('calculatedProfitMargin')}</p>
+                  <div className="mt-2 relative">
+                    <p className="text-3xl font-bold text-red-600 relative z-10 flex items-center">
+                      <TrendingUp className="h-6 w-6 mr-2" /> 
+                      {calculation.profitMarginPercentage.toFixed(0)}%
+                    </p>
+                    <div className="absolute inset-0 bg-yellow-300/20 blur-sm rounded-full"></div>
+                  </div>
+                </>
+              )}
             </div>
           </div>
         </div>

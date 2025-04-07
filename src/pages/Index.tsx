@@ -13,10 +13,18 @@ import { useIngredientCategories } from "@/hooks/useIngredientCategories";
 import { useElectricityCosts } from "@/hooks/useElectricityCosts";
 import { useBusinessCosts } from "@/hooks/useBusinessCosts";
 import { usePizzaCalculator } from "@/hooks/usePizzaCalculator";
+import { CalculationModeToggle } from "@/components/CalculationModeToggle";
+import { SellingPriceInput } from "@/components/SellingPriceInput";
 
 const Index = () => {
-  // Profit margin state
+  // Calculation mode state
+  const [calculationMode, setCalculationMode] = useState<"setProfit" | "calculateProfit">("setProfit");
+  
+  // Profit margin state (for setProfit mode)
   const [profitMargin, setProfitMargin] = useState<number>(50);
+  
+  // Selling price state (for calculateProfit mode)
+  const [sellingPrice, setSellingPrice] = useState<number>(10);
   
   // Custom hooks for state management
   const { categories, handleIngredientChange } = useIngredientCategories();
@@ -38,12 +46,24 @@ const Index = () => {
     profitMargin,
     selectedCountry,
     electricityCosts,
-    businessCostsPerPizza
+    businessCostsPerPizza,
+    calculationMode,
+    sellingPrice
   );
 
   // Handle profit margin change
   const handleProfitMarginChange = (value: number) => {
     setProfitMargin(value);
+  };
+
+  // Handle selling price change
+  const handleSellingPriceChange = (value: number) => {
+    setSellingPrice(value);
+  };
+
+  // Handle mode change
+  const handleModeChange = (mode: "setProfit" | "calculateProfit") => {
+    setCalculationMode(mode);
   };
 
   return (
@@ -52,7 +72,12 @@ const Index = () => {
       <PageHeader />
       
       <main className="container mb-16">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <CalculationModeToggle 
+          mode={calculationMode} 
+          onModeChange={handleModeChange} 
+        />
+        
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mt-6">
           <div className="lg:col-span-2 space-y-8">
             <IngredientSection 
               categories={categories}
@@ -72,14 +97,24 @@ const Index = () => {
               onPizzasPerMonthChange={setPizzasPerMonth}
             />
             
-            <ProfitMarginInput
-              profitMargin={profitMargin}
-              onChange={handleProfitMarginChange}
-            />
+            {calculationMode === "setProfit" ? (
+              <ProfitMarginInput
+                profitMargin={profitMargin}
+                onChange={handleProfitMarginChange}
+              />
+            ) : (
+              <SellingPriceInput
+                sellingPrice={sellingPrice}
+                onChange={handleSellingPriceChange}
+              />
+            )}
           </div>
           
           <div className="sticky top-4 h-fit lg:col-span-1">
-            <PizzaPriceResult calculation={calculation} />
+            <PizzaPriceResult 
+              calculation={calculation} 
+              mode={calculationMode}
+            />
             <HowItWorks />
           </div>
         </div>
