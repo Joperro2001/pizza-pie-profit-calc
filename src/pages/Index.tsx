@@ -79,6 +79,14 @@ const Index = () => {
         
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mt-6">
           <div className="lg:col-span-2 space-y-8">
+            {/* Show selling price input at the top when in calculateProfit mode */}
+            {calculationMode === "calculateProfit" && (
+              <SellingPriceInput
+                sellingPrice={sellingPrice}
+                onChange={handleSellingPriceChange}
+              />
+            )}
+            
             <IngredientSection 
               categories={categories}
               onIngredientChange={handleIngredientChange}
@@ -97,15 +105,11 @@ const Index = () => {
               onPizzasPerMonthChange={setPizzasPerMonth}
             />
             
-            {calculationMode === "setProfit" ? (
+            {/* Only show profit margin input in setProfit mode */}
+            {calculationMode === "setProfit" && (
               <ProfitMarginInput
                 profitMargin={profitMargin}
                 onChange={handleProfitMarginChange}
-              />
-            ) : (
-              <SellingPriceInput
-                sellingPrice={sellingPrice}
-                onChange={handleSellingPriceChange}
               />
             )}
           </div>
