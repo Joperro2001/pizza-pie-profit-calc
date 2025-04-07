@@ -38,26 +38,26 @@ export const pricingTranslations: TranslationObject = {
     it: 'Prezzo di Vendita Consigliato'
   },
   
-  // New translations for calculation modes
+  // New translations for calculation modes with clearer names
   calculationMode: {
     en: 'Calculation Mode',
     it: 'Modalità di Calcolo'
   },
   setProfitMode: {
-    en: 'Set Profit Margin',
-    it: 'Imposta Margine di Profitto'
+    en: 'Find the Best Profit Margin',
+    it: 'Trova il Miglior Margine di Profitto'
   },
   setProfitModeShort: {
-    en: 'Set Margin',
-    it: 'Imposta Margine'
+    en: 'Best Margin',
+    it: 'Miglior Margine'
   },
   calculateProfitMode: {
-    en: 'Calculate Profit Margin',
-    it: 'Calcola Margine di Profitto'
+    en: 'Find Your Pizzeria\'s Profit Margin',
+    it: 'Trova il Margine di Profitto della Tua Pizzeria'
   },
   calculateProfitModeShort: {
-    en: 'Calculate Margin',
-    it: 'Calcola Margine'
+    en: 'Your Margin',
+    it: 'Tuo Margine'
   },
   profitMarginCalculation: {
     en: 'Profit Margin Calculation',
